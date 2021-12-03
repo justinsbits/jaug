@@ -1,0 +1,11 @@
+* Add paging
+* Address setting user id / date and time for audit
+* setup repository - 1hr
+* setup docker for sql server specific to this project - 1hr
+* setup sink for logging - 4hr (for testing/tweaking)
+	Test prod and dev 
+* unit tests
+* identity mgmmt
+** authentication
+** authorization
+* add project for executing load against API - 8hr
