@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace jaug_server_api_core.Controllers
+namespace jaug_server_api_core.Data.Repositories
 {
     // Kevin Dockx - PS - Implementing Advanced RESTful Concerns with ASP.NET Core 3
     public class PagedList<T>: List<T>

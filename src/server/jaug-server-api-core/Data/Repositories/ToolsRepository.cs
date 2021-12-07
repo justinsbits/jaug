@@ -7,10 +7,10 @@ using Microsoft.Extensions.Logging;
 
 using jaug_server_api_core.Data.Entities;
 using jaug_server_api_core.Data.Contexts;
-using jaug_server_api_core.Repositories;
+using jaug_server_api_core.Data.Repositories;
 using jaug_server_api_core.Controllers;
 
-namespace jaug_server_api_core.Infrastructure.Repositories
+namespace jaug_server_api_core.Data.Repositories
 {
     public class ToolsRepository : IToolsRepository
     {

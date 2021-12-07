@@ -3,7 +3,7 @@ using jaug_server_api_core.Data.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace jaug_server_api_core.Repositories
+namespace jaug_server_api_core.Data.Repositories
 {
     public interface IToolsRepository 
     {

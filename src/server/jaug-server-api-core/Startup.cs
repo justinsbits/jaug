@@ -1,25 +1,24 @@
-using jaug_server_api_core.Data.Contexts;
+using System;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using jaug_server_api_core.Data.Entities;
-using jaug_server_api_core.Repositories;
-using jaug_server_api_core.Infrastructure.Repositories;
-using jaug_server_api_core.Middleware;
+using Microsoft.AspNetCore.Http;
+
 using FluentValidation.AspNetCore;
 using Newtonsoft.Json.Serialization;
+
+using jaug_server_api_core.Data.Contexts;
+using jaug_server_api_core.Data.Repositories;
+using jaug_server_api_core.Middleware;
+using jaug_server_api_core.Controllers;
+
 
 namespace jaug_server_api_core
 {
@@ -40,7 +39,14 @@ namespace jaug_server_api_core
                  maxRetryDelay: TimeSpan.FromSeconds(1),
                  errorNumbersToAdd: new int[] { }
              )));
-
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriService>(o =>
+            {
+                var accessor = o.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(uri);
+            });
             // Autho - https://auth0.com/blog/aspnet-web-api-authorization/
             services.AddAuthentication(options =>
             {

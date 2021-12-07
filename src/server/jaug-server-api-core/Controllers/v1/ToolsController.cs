@@ -7,26 +7,26 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 using AutoMapper;
-
-using jaug_server_api_core.Repositories;
 using jaug_server_api_core.Dtos;
 using jaug_server_api_core.Data.Entities;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using jaug_server_api_core.Data.Repositories;
 
-namespace jaug_server_api_core.Controllers
+namespace jaug_server_api_core.Controllers.v1
 {
     public class ToolsController : BaseApiController
     {
         private readonly ILogger<ToolsController> _logger; 
         private readonly IToolsRepository _repository;
         private readonly IMapper _mapper;
+        private readonly IUriService _uriService;
 
-        public ToolsController(ILogger<ToolsController> logger, IToolsRepository repository, IMapper mapper)
+        public ToolsController(ILogger<ToolsController> logger, IToolsRepository repository, IMapper mapper, IUriService uriService)
         {
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
+            _uriService = uriService;
         }
 
         //GET api/tools
@@ -38,9 +38,14 @@ namespace jaug_server_api_core.Controllers
         public async Task<ActionResult<IEnumerable<ToolReadDto>>> GetAll([FromQuery] ToolsResourceParameters rParams)
         {
             _logger.LogInformation("Starting controller action GetAll");
-            var entities = await _repository.GetAllAsync(rParams);
+            var pagedEntities = await _repository.GetAllAsync(rParams);
+            
+            // !!! todo
+            // implement standard response, wrapper, for all controllers
+            // implement sort/order 
 
-            return Ok(_mapper.Map<IEnumerable<ToolReadDto>>(entities));
+            var pagedReponse = PagedResponseDto<Tool, ToolReadDto>.Create(_mapper, pagedEntities, rParams, _uriService, Request.Path.Value);
+            return Ok(pagedReponse);
         }
 
         //GET api/tools/{id}
@@ -165,5 +170,6 @@ namespace jaug_server_api_core.Controllers
 
             return NoContent();
         }
+
     }
 }

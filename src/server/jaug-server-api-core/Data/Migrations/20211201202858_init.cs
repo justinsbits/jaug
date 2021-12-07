@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace jaug_server_api_core.Migrations
+namespace jaug_server_api_core.Data.Migrations
 {
     public partial class init : Migration
     {

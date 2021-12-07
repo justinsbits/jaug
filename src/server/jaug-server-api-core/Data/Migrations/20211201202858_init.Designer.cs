@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using jaug_server_api_core.Data.Contexts;
 
-namespace jaug_server_api_core.Migrations
+namespace jaug_server_api_core.Data.Migrations
 {
     [DbContext(typeof(CoreContext))]
     [Migration("20211201202858_init")]
